@@ -21,13 +21,20 @@ resourceManager.init = function()
 	resourceManager.grid.column('Status', 100);
 	resourceManager.grid.column('Actions', 180);
 	
-	for(var i=0,j=20; i<j; i++)
-	{
-		resourceManager.grid.row(['mexui', 'running', '']);
-		
-		var button = resourceManager.window.button(315, 40 + ((i+1)*25) + 2, 60, 21, 'Start');
-		button.bindTo(resourceManager.grid);
-	}
+	getResources().forEach(function(index, resource) {
+		let resourceStatus = "unknown";
+		if(resource.isStarting) {
+			resourceStatus = "starting";
+		} else if(resource.isStarted) {
+			resourceStatus = "running";
+		} else {
+			resourceStatus = "stopped";
+		}
+		resourceManager.grid.row([resource.name, resourceStatus, '']);
+		var button = resourceManager.window.button(315, 40 + ((index+1)*25) + 2, 60, 21, (resource.isStarted||resource.isStarting)?"Stop":"Start");
+		button.bindTo(resourceManager.grid);		
+	})
+
 	
 	bindKey(SDLK_F1, KEYSTATE_DOWN, function(e)
 	{
