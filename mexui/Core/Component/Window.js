@@ -139,7 +139,7 @@ mexui.Component.Window.prototype.render = function()
 			// window title bar icons
 			var iconPos = this.getCloseIconPosition();
 			mexui.native.drawRectangle(iconPos, this.titleBarIconSize, this.getStyles('icon'));
-			mexui.native.drawText(iconPos, this.titleBarIconSize, 'x', this.getStyles('icon'));
+			mexui.native.drawText(iconPos, this.titleBarIconSize, 'X', this.getStyles('icon'));
 		}
 	}
 	
