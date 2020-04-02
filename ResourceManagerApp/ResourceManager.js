@@ -17,12 +17,14 @@ resourceManager.init = function()
 	resourceManager.grid = resourceManager.window.grid(10, 40, 480, 350);
 	resourceManager.grid.styles.main.backgroundColour = toColour(255, 80, 20, 255);
 	
-	resourceManager.grid.column('Name', 200);
-	resourceManager.grid.column('Status', 100);
-	resourceManager.grid.column('Actions', 180);
+	var cols = [];
+	cols[0] = resourceManager.grid.column('Name', 200);
+	cols[1] = resourceManager.grid.column('Status', 100);
+	cols[2] = resourceManager.grid.column('Actions', 180);
 	
-	getResources().forEach(function(index, resource) {
-		let resourceStatus = "unknown";
+	var rows = [];
+	getResources().forEach(function(resource, index) {
+		let resourceStatus;
 		if(resource.isStarting) {
 			resourceStatus = "starting";
 		} else if(resource.isStarted) {
@@ -33,8 +35,7 @@ resourceManager.init = function()
 		resourceManager.grid.row([resource.name, resourceStatus, '']);
 		var button = resourceManager.window.button(315, 40 + ((index+1)*25) + 2, 60, 21, (resource.isStarted||resource.isStarting)?"Stop":"Start");
 		button.bindTo(resourceManager.grid);		
-	})
-
+	});
 	
 	bindKey(SDLK_F1, KEYSTATE_DOWN, function(e)
 	{

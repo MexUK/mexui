@@ -100,11 +100,13 @@ mexui.Component.Window.prototype.onMouseMove = function(e, offset)
 		}
 		e.used = true;
 	}
+	/*
 	else if(wasHovered)
 	{
 		mexui.clearHoveredComponent();
 		this.onMouseExit();
 	}
+	*/
 };
 
 mexui.Component.Window.prototype.onMouseWheel = function(e, data)

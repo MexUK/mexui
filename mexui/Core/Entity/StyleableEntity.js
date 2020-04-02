@@ -67,6 +67,11 @@ mexui.Entity.StyleableEntity.prototype.linkComponentStyles = function(componentN
 	return mexui.util.linkStyles(mexui.Component[componentName].defaultStyles, styles);
 };
 
+mexui.Entity.StyleableEntity.prototype.linkEntryStyles = function(entryName, styles)
+{
+	return mexui.util.linkStyles(mexui.Entry[entryName].defaultStyles, styles);
+};
+
 mexui.Entity.StyleableEntity.prototype.isFocused = function()
 {
 	return this == mexui.focusedControl;
@@ -94,6 +99,39 @@ mexui.Entity.StyleableEntity.prototype.getStyles = function(controlPartName)
 	if(isHovered)
 	{
 		return mexui.util.mergeStyles(styles, ['hover']);
+	}
+	
+	return styles;
+};
+
+mexui.Entity.StyleableEntity.prototype.getEntryStyles = function(data)
+{
+	var styles = {};
+	
+	for(var i in data)
+	{
+		var baseStyles = data[i][0].getStyles(data[i][1]);
+		
+		for(var k in baseStyles)
+		{
+			if(baseStyles.hasOwnProperty(k) && styles[k] === undefined)
+			{
+				styles[k] = baseStyles[k];
+			}
+		}
+	}
+	
+	for(var i in data)
+	{
+		var baseStyles = data[i][0].getStyles(data[i][1]);
+		
+		for(var k in baseStyles)
+		{
+			if(styles[k] === undefined)
+			{
+				styles[k] = baseStyles[k];
+			}
+		}
 	}
 	
 	return styles;

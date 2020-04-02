@@ -358,6 +358,5 @@ generalFeatures.init = function()
 	});
 };
 
-console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa3');
 generalFeatures.init();
 

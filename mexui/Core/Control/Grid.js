@@ -34,55 +34,83 @@ mexui.Control.Grid.prototype.render = function()
 	mexui.native.drawRectangle(pos, this.size, this.getStyles('main'));
 	
 	var startX = pos.x;
+	var maxColumnHeight = 0;
 	for(var i in this.axis.x.entries)
 	{
 		var column = this.axis.x.entries[i];
 		
-		mexui.native.drawText(new Vec2(startX, pos.y), new Vec2(column.width, 25), column.text, this.getStyles('header'));
+		mexui.native.drawText(new Vec2(startX, pos.y), new Vec2(column.width, column.height), column.text, this.getStyles('header'));
 		
 		startX += column.width;
 		mexui.native.drawAALine(new Vec2(startX, pos.y), new Vec2(startX, pos.y + this.size.y), this.getStyles('column'));
+		
+		if(column.height > maxColumnHeight)
+		{
+			maxColumnHeight = column.height;
+		}
 	}
 	
-	var startY = pos.y + 25;
+	var startY = pos.y + maxColumnHeight;
 	mexui.native.drawAALine(new Vec2(pos.x, startY), new Vec2(pos.x + this.size.x, startY), this.getStyles('row'));
 	
 	for(var i=this.axis.y.getEntryStartIndex(),j=this.axis.y.getEntryEndIndex(); i<j; i++)
 	{
-		var rowCellsText = this.axis.y.entries[i];
-		if(!rowCellsText)
+		var row = this.axis.y.entries[i];
+		if(!row)
 			break;
 		
 		startX = pos.x;
-		
-		for(var i2 in rowCellsText)
+		for(var i2 in row.cells)
 		{
 			var column = this.axis.x.entries[i2];
-			var cellText = rowCellsText[i2];
+			var cell = row.cells[i2];
+			var cellText = cell.text;
 			
-			mexui.native.drawText(new Vec2(startX, startY), new Vec2(column.width, 25), cellText, this.getStyles('cell'));
+			var styles = this.getEntryStyles([[cell,'main'], [row,'main'], [this,'row'], [this,'cell']]);
+			
+			mexui.native.drawRectangle(new Vec2(startX, startY), new Vec2(column.width, column.height), styles);
+			mexui.native.drawText(new Vec2(startX, startY), new Vec2(column.width, column.height), cellText, styles);
 			
 			startX += column.width;
 		}
 		
-		startY += 25;
+		startY += row.rowHeight;
 		mexui.native.drawAALine(new Vec2(pos.x, startY), new Vec2(pos.x + this.size.x, startY), this.getStyles('row'));
 	}
 };
 
 // model
-mexui.Control.Grid.prototype.column = function(text, width)
+mexui.Control.Grid.prototype.column = function(text, width, height)
 {
-	var entry = new mexui.Entry.GridColumn(this, text, width);
+	var entry = new mexui.Entry.GridColumn(this, text, width, height);
 	this.axis.x.addEntry(entry);
 	return entry;
 };
 
-mexui.Control.Grid.prototype.row = function(rowCellsText)
+mexui.Control.Grid.prototype.row = function(cellsData, styles)
 {
-	for(var i in rowCellsText)
-		rowCellsText[i] = rowCellsText[i] + '';
-	this.axis.y.addEntry(rowCellsText);
+	var cells = [];
+	for(var i in cellsData)
+	{
+		if(cellsData[i] instanceof mexui.Component.Entry)
+		{
+			cells[i] = cellsData[i];
+		}
+		else
+		{
+			cells[i] = new mexui.Component.Entry(this, 1, cellsData[i] + '');
+		}
+	}
+	
+	var entry = new mexui.Entry.GridRow(this, cells, styles);
+	this.axis.y.addEntry(entry);
+	return entry;
+};
+
+mexui.Control.Grid.prototype.cell = function(text, styles)
+{
+	var entry = new mexui.Component.Entry(this, 0, text, styles);
+	return entry;
 };
 
 mexui.Control.Grid.prototype.getAllEntriesLength = function(axisIndex)

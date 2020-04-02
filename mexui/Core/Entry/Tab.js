@@ -1,11 +1,11 @@
 mexui.Entry.Tab = function(tabPanel, text)
 {
-	mexui.Entity.Entry.call(this, tabPanel, 0);
+	mexui.Component.Entry.call(this, tabPanel, 0);
 	
 	this.text				= text;
 	this.controls			= [];
 };
-mexui.util.extend(mexui.Entry.Tab, mexui.Entity.Entry);
+mexui.util.extend(mexui.Entry.Tab, mexui.Component.Entry);
 
 // model
 mexui.Entry.Tab.prototype._control = function(control)
