@@ -57,6 +57,10 @@ mexui.Entity.StyleableEntity.defaultStyles = mexui.util.linkGlobalStyles(mexui.E
 	focused:
 	{
 		borderColour:		toColour(28, 119, 198, 255)
+	},
+	invalidValue:
+	{
+		borderColour:		toColour(250, 5, 5, 255)
 	}
 });
 

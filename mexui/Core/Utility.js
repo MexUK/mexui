@@ -474,6 +474,29 @@ mexui.util.time = function()
 	return gta.tickCount;
 };
 
+mexui.util.isIntChar = function(character)
+{
+	var code = character.charCodeAt(0);
+	if(code >= 48 && code <= 57)
+		return true;
+	
+	switch(character)
+	{
+		case '-':
+		case '+':
+		case 'e':
+		case 'E':
+			return true;
+	}
+	
+	return false;
+};
+
+mexui.util.isFloatChar = function(character)
+{
+	return mexui.util.isIntChar(character) || character == '.';
+};
+
 mexui.util.isInt = function(str)
 {
 	var strInt = parseInt(str);

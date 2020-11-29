@@ -11,7 +11,6 @@ mexui.util.createControlConstructor('Date', false, function(window, x, y, w, h, 
 	this.arrowBoxSize			= new Vec2(25, 22);
 	
 	this.maxYearOffset			= 10;
-	
 	this.minYearCallback		= ()=>{ return 1900; };
 	this.maxYearCallback		= ()=>{ return new Date().getFullYear() + this.maxYearOffset; }
 });
@@ -120,35 +119,41 @@ mexui.Control.Date.prototype.renderAfter = function()
 // model
 mexui.Control.Date.prototype.generateText = function()
 {
-	this.text = (this.day < 10 ? '0'+this.day : this.day)
+	this.setText((this.day < 10 ? '0'+this.day : this.day)
 			+'/'+(this.month < 10 ? '0'+this.month : this.month)
-			+'/'+(this.year < 10 ? '0'+this.year : this.year);
+			+'/'+(this.year < 10 ? '0'+this.year : this.year));
 };
 
 mexui.Control.Date.prototype.validateInputCallback = function(e, character)
 {
-	var text = this.getTextWithNewCharacter(character);
-	var parts = text.split('/');
+	return mexui.util.isIntChar(character) || character == '/';
+};
+
+mexui.Control.Date.prototype.validateValueCallback = function(e)
+{
+	var parts = this.getText().split('/');
+	
+	if(parts.length != 3)
+		return false;
 	
 	for(var i in parts)
 	{
-		if(i == 3)
-			return false;
-		
 		var partAsStr = parts[i];
 		if(partAsStr === '')
 			continue;
+		if(partAsStr.substr(0, 1) == '0')
+			partAsStr = partAsStr.substr(1);
 		
 		var part = parseInt(partAsStr);
 		
 		if(!mexui.util.isPositiveInt(partAsStr))
 			return false;
 		
-		//if(part < (i == 2 ? this.minYearCallback() : 0))
-		//	return false;
+		if(part < (i == 2 ? this.minYearCallback() : 0))
+			return false;
 	
-		//if(part > (i == 2 ? this.maxYearCallback() : (i == 1 ? 12 : 31)))
-		//	return false;
+		if(part > (i == 2 ? this.maxYearCallback() : (i == 1 ? 12 : 31)))
+			return false;
 	}
 	
 	return true;

@@ -102,35 +102,41 @@ mexui.Control.Time.prototype.renderAfter = function()
 // model
 mexui.Control.Time.prototype.generateText = function()
 {
-	this.text = (this.hour < 10 ? '0'+this.hour : this.hour)
+	this.setText((this.hour < 10 ? '0'+this.hour : this.hour)
 			+':'+(this.minute < 10 ? '0'+this.minute : this.minute)
-			+':'+(this.second < 10 ? '0'+this.second : this.second);
+			+':'+(this.second < 10 ? '0'+this.second : this.second));
 };
 
 mexui.Control.Time.prototype.validateInputCallback = function(e, character)
 {
-	var text = this.getTextWithNewCharacter(character);
-	var parts = text.split(':');
+	return mexui.util.isIntChar(character) || character == ':';
+};
+
+mexui.Control.Time.prototype.validateValueCallback = function(e)
+{
+	var parts = this.getText().split(':');
+	
+	if(parts.length != 3)
+		return false;
 	
 	for(var i in parts)
 	{
-		if(i == 3)
-			return false;
-		
 		var partAsStr = parts[i];
 		if(partAsStr === '')
 			continue;
+		if(partAsStr.substr(0, 1) == '0')
+			partAsStr = partAsStr.substr(1);
 		
 		var part = parseInt(partAsStr);
 		
 		if(!mexui.util.isPositiveInt(partAsStr))
 			return false;
 		
-		//if(part < 0)
-		//	return false;
+		if(part < 0)
+			return false;
 		
-		//if(part > (i == 0 ? 23 : 59))
-		//	return false;
+		if(part > (i == 0 ? 23 : 59))
+			return false;
 	}
 	
 	return true;

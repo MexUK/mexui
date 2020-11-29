@@ -7,13 +7,15 @@ mexui.util.extend(mexui.Control.Second, mexui.Control.TextInput);
 // model
 mexui.Control.Second.prototype.validateInputCallback = function(e, character)
 {
-	var _int = this.getTextWithNewCharacter(character);
+	return mexui.util.isIntChar(character);
+};
+
+mexui.Control.Second.prototype.validateValueCallback = function(e)
+{
+	var _int = parseInt(this.getText());
 	
-	if(!mexui.util.isPositiveInt(_int))
+	if(_int < 1 || _int > 59)
 		return false;
-	
-	//if(_int < 0 || _int > 59)
-	//	return false;
 	
 	return true;
 };
