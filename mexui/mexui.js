@@ -284,9 +284,9 @@ mexui.setInput = function(showInput)
 	if(localPlayer)
 	{
 		if(showInput)
-			setCameraLookAtEntity(new Vec3(cameraMatrix.m41, cameraMatrix.m42, cameraMatrix.m43), localPlayer, false);
+			gta.setCameraLookAtEntity(new Vec3(gta.cameraMatrix.m41, gta.cameraMatrix.m42, gta.cameraMatrix.m43), localPlayer, false);
 		else
-			restoreCamera(false);
+			gta.restoreCamera(false);
 	}
 };
 

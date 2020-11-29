@@ -72,6 +72,9 @@ mexui.Control.DropDown.prototype.render = function()
 	}
 	
 	mexui.Entity.ControlWithEntries.prototype.render.call(this);
+	
+	if(this.isFocused())
+		mexui.native.drawRectangleBorder(mexui.util.subtractVec2(pos,new Vec2(2,2)), mexui.util.addVec2(this.size,new Vec2(3,3)), this.getStyles('focused'));
 };
 
 mexui.Control.DropDown.prototype.renderAfter = function()
@@ -79,9 +82,13 @@ mexui.Control.DropDown.prototype.renderAfter = function()
 	if(this.axis.y.entriesShown)
 	{
 		var pos = this.getScreenPosition();
+		var pos2 = new Vec2(pos.x, pos.y);
 		
 		pos.x += this.entriesPositionOffset.x;
 		pos.y += this.entriesPositionOffset.y;
+		
+		pos2.x += this.entriesPositionOffset.x;
+		pos2.y += this.entriesPositionOffset.y;
 		
 		for(var i=this.axis.y.getEntryStartIndex(),j=this.axis.y.getEntryEndIndex(); i<j; i++)
 		{
@@ -96,6 +103,9 @@ mexui.Control.DropDown.prototype.renderAfter = function()
 			
 			pos.y += this.entrySize.y;
 		}
+		
+		if(this.isFocused())
+			mexui.native.drawRectangleBorder(mexui.util.subtractVec2(pos2,new Vec2(2,2)), mexui.util.addVec2(new Vec2(this.entrySize.x,this.axis.y.getDisplayedEntriesLength()),new Vec2(3,3)), this.getStyles('focused'));
 	}
 	
 	mexui.Entity.ControlWithEntries.prototype.renderAfter.call(this);

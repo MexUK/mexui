@@ -24,6 +24,11 @@ mexui.util.addVec2 = function(vec2a, vec2b)
 	return new Vec2(vec2a.x + vec2b.x, vec2a.y + vec2b.y);
 };
 
+mexui.util.subtractVec2 = function(vec2a, vec2b)
+{
+	return new Vec2(vec2a.x - vec2b.x, vec2a.y - vec2b.y);
+};
+
 mexui.util.addVec3 = function(vec3a, vec3b)
 {
 	return new Vec3(vec3a.x + vec3b.x, vec3a.y + vec3b.y, vec3a.z + vec3b.z);

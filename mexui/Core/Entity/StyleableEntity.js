@@ -53,6 +53,10 @@ mexui.Entity.StyleableEntity.defaultStyles = mexui.util.linkGlobalStyles(mexui.E
 			textColour:			toColour(0, 0, 0, 255)
 		}
 		*/
+	},
+	focused:
+	{
+		borderColour:		toColour(28, 119, 198, 255)
 	}
 });
 

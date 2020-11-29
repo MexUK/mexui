@@ -67,6 +67,7 @@ mexui.Control.Slider.prototype.onMouseMove = function(e, offset)
 mexui.Control.Slider.prototype.render = function()
 {
 	var pos = this.getScreenPosition();
+	var pos2 = new Vec2(pos.x, pos.y);
 	
 	mexui.native.drawRectangle(pos, this.size, this.getStyles('main'));
 	mexui.native.drawRectangle(this.getInnerBarPosition(), this.innerBarSize, this.getStyles('innerBar'));
@@ -81,6 +82,9 @@ mexui.Control.Slider.prototype.render = function()
 	
 	pos.x += this.size.x - mexui.native.getTextWidth(this.maxText, this.getStyles('maxText'));
 	mexui.native.drawText(pos, this.size, this.maxText, this.getStyles('maxText'));
+	
+	if(this.isFocused())
+		mexui.native.drawRectangleBorder(mexui.util.subtractVec2(pos2,new Vec2(2,2)), mexui.util.addVec2(this.size,new Vec2(3,3)), this.getStyles('focused'));
 };
 
 // model

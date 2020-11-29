@@ -38,6 +38,9 @@ mexui.Control.CheckBox.prototype.render = function()
 		mexui.native.drawRectangle(mexui.util.addVec2(pos, new Vec2(1, 1)), new Vec2(this.size.x - 2, this.size.y - 2), this.getStyles('innerBox'));
 	
 	mexui.native.drawText(mexui.util.addVec2(pos, new Vec2(this.size.x + this.textMarginLeft, 2)), this.size, this.text, this.getStyles('main'));
+	
+	if(this.isFocused())
+		mexui.native.drawRectangleBorder(mexui.util.subtractVec2(pos,new Vec2(2,2)), mexui.util.addVec2(this.size,new Vec2(3,3)), this.getStyles('focused'));
 };
 
 // model

@@ -50,13 +50,12 @@ addEventHandler('onMouseDown', function(e, mouse, button)
 	var imageRatio = new Vec2(0.0, 0.0);
 	imageRatio.x = imageClickPos.x / map.size.x;
 	imageRatio.y = imageClickPos.y / map.size.y;
-	//console.log(imageRatio.y);
 	imageRatio.y = 1.0 - imageRatio.y;
 	
 	var worldPos = new Vec3(0.0, 0.0, 20.0);
 	worldPos.x = map.worldMin.x + (imageRatio.x * (map.worldMax.x - map.worldMin.x));
 	worldPos.y = map.worldMin.y + (imageRatio.y * (map.worldMax.y - map.worldMin.y));
-	worldPos.z = findGroundZForCoord(worldPos.x, worldPos.y);
+	worldPos.z = gta.findGroundZForCoord(worldPos.x, worldPos.y);
 	
 	if(localPlayer.vehicle)
 		localPlayer.vehicle.position = worldPos;

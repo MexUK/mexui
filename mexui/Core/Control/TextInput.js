@@ -199,6 +199,8 @@ mexui.Control.TextInput.prototype.onKeyDown = function(e, key, mods)
 mexui.Control.TextInput.prototype.render = function()
 {
 	var pos = this.getScreenPosition();
+	var pos2 = new Vec2(pos.x, pos.y);
+	
 	mexui.native.drawRectangle(pos, this.size, this.getStyles('main'));
 	
 	if(this.isEmpty())
@@ -217,16 +219,21 @@ mexui.Control.TextInput.prototype.render = function()
 		}
 	}
 	
-	if(mexui.focusedControl == this && this.caretShownForBlink)
+	if(this.isFocused())
 	{
-		var pos = this.getScreenPosition();
-		var text = this.lines[this.caretPosition.y].substr(0, this.caretPosition.x);
-		var displayedText = this.masked ? '*'.repeat(text.length) : text;
-		var textWidth = mexui.native.getTextWidth(displayedText, this.getStyles('main'));
-		var caretPosOffset = new Vec2(5 + textWidth, (this.caretPosition.y * this.lineHeight) + 1);
-		var caretPoint1 = mexui.util.addVec2(pos, caretPosOffset);
-		var caretPoint2 = new Vec2(caretPoint1.x, caretPoint1.y + 22);
-		mexui.native.drawAALine(caretPoint1, caretPoint2, this.getStyles('caret'));
+		mexui.native.drawRectangleBorder(mexui.util.subtractVec2(pos2,new Vec2(2,2)), mexui.util.addVec2(this.size,new Vec2(3,3)), this.getStyles('focused'));
+		
+		if(this.caretShownForBlink)
+		{
+			var pos = this.getScreenPosition();
+			var text = this.lines[this.caretPosition.y].substr(0, this.caretPosition.x);
+			var displayedText = this.masked ? '*'.repeat(text.length) : text;
+			var textWidth = mexui.native.getTextWidth(displayedText, this.getStyles('main'));
+			var caretPosOffset = new Vec2(5 + textWidth, (this.caretPosition.y * this.lineHeight) + 1);
+			var caretPoint1 = mexui.util.addVec2(pos, caretPosOffset);
+			var caretPoint2 = new Vec2(caretPoint1.x, caretPoint1.y + 22);
+			mexui.native.drawAALine(caretPoint1, caretPoint2, this.getStyles('caret'));
+		}
 	}
 };
 

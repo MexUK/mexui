@@ -25,4 +25,7 @@ mexui.Control.Button.prototype.render = function()
 	
 	mexui.native.drawRectangle(pos, this.size, this.getStyles('main'));
 	mexui.native.drawText(pos, this.size, this.text, this.getStyles('main'));
+	
+	if(this.isFocused())
+		mexui.native.drawRectangleBorder(mexui.util.subtractVec2(pos,new Vec2(2,2)), mexui.util.addVec2(this.size,new Vec2(3,3)), this.getStyles('focused'));
 };
