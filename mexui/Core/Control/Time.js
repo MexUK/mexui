@@ -117,16 +117,20 @@ mexui.Control.Time.prototype.validateInputCallback = function(e, character)
 		if(i == 3)
 			return false;
 		
-		var part = parseInt(parts[i]);
+		var partAsStr = parts[i];
+		if(partAsStr === '')
+			continue;
 		
-		if(isNaN(part))
+		var part = parseInt(partAsStr);
+		
+		if(!mexui.util.isPositiveInt(partAsStr))
 			return false;
 		
-		if(part < 0)
-			return false;
+		//if(part < 0)
+		//	return false;
 		
-		if(part > (i == 0 ? 23 : 59))
-			return false;
+		//if(part > (i == 0 ? 23 : 59))
+		//	return false;
 	}
 	
 	return true;

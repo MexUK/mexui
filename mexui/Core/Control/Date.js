@@ -9,6 +9,11 @@ mexui.util.createControlConstructor('Date', false, function(window, x, y, w, h, 
 	this.inputShown				= false;
 	this.valueBoxSize			= new Vec2(50, 30);
 	this.arrowBoxSize			= new Vec2(25, 22);
+	
+	this.maxYearOffset			= 10;
+	
+	this.minYearCallback		= ()=>{ return 1900; };
+	this.maxYearCallback		= ()=>{ return new Date().getFullYear() + this.maxYearOffset; }
 });
 mexui.util.extend(mexui.Control.Date, mexui.Control.TextInput);
 
@@ -51,10 +56,12 @@ mexui.Control.Date.prototype.onMouseDown = function(e)
 			else if(this.month == 13)
 				this.month = 1;
 			
-			if(this.year == 1899)
-				this.year = 1900;
-			else if(this.year == 2020)
-				this.year = 2019;
+			var minYear = this.minYearCallback();
+			var maxYear = this.maxYearCallback();
+			if(this.year < minYear)
+				this.year = minYear;
+			else if(this.year > maxYear)
+				this.year = maxYear;
 			
 			this.generateText();
 			
@@ -121,23 +128,27 @@ mexui.Control.Date.prototype.generateText = function()
 mexui.Control.Date.prototype.validateInputCallback = function(e, character)
 {
 	var text = this.getTextWithNewCharacter(character);
-	var parts = text.split(':');
+	var parts = text.split('/');
 	
 	for(var i in parts)
 	{
 		if(i == 3)
 			return false;
 		
-		var part = parseInt(parts[i]);
+		var partAsStr = parts[i];
+		if(partAsStr === '')
+			continue;
 		
-		if(isNaN(part))
+		var part = parseInt(partAsStr);
+		
+		if(!mexui.util.isPositiveInt(partAsStr))
 			return false;
 		
-		if(part < 0)
-			return false;
-		
-		if(part > (i == 0 ? 23 : 59))
-			return false;
+		//if(part < (i == 2 ? this.minYearCallback() : 0))
+		//	return false;
+	
+		//if(part > (i == 2 ? this.maxYearCallback() : (i == 1 ? 12 : 31)))
+		//	return false;
 	}
 	
 	return true;

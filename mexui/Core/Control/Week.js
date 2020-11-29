@@ -7,13 +7,13 @@ mexui.util.extend(mexui.Control.Week, mexui.Control.TextInput);
 // model
 mexui.Control.Week.prototype.validateInputCallback = function(e, character)
 {
-	var _int = parseInt(character);
+	var _int = this.getTextWithNewCharacter(character);
 	
-	if(isNaN(_int))
+	if(!mexui.util.isPositiveInt(_int))
 		return false;
 	
-	if(_int < 0 || _int > 51)
-		return false;
+	//if(_int < 0 || _int > 51)
+	//	return false;
 	
 	return true;
 };

@@ -7,5 +7,5 @@ mexui.util.extend(mexui.Control.Integer, mexui.Control.TextInput);
 // model
 mexui.Control.Integer.prototype.validateInputCallback = function(e, character)
 {
-	return !isNaN(parseInt(this.getTextWithNewCharacter(character)));
+	return mexui.util.isInt(this.getTextWithNewCharacter(character));
 };

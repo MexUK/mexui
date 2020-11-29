@@ -7,5 +7,5 @@ mexui.util.extend(mexui.Control.Number, mexui.Control.TextInput);
 // model
 mexui.Control.Number.prototype.validateInputCallback = function(e, character)
 {
-	return !isNaN(parseFloat(this.getTextWithNewCharacter(character)));
+	return mexui.util.isFloat(this.getTextWithNewCharacter(character));
 };

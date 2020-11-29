@@ -474,3 +474,20 @@ mexui.util.time = function()
 	return gta.tickCount;
 };
 
+mexui.util.isInt = function(str)
+{
+	var strInt = parseInt(str);
+	return !isNaN(strInt) && str.length == (strInt+'').length;
+};
+
+mexui.util.isPositiveInt = function(str)
+{
+	var strInt = parseInt(str);
+	return !isNaN(strInt) && strInt >= 0 && str.length == (strInt+'').length;
+};
+
+mexui.util.isFloat = function(str)
+{
+	var strFloat = parseFloat(str);
+	return !isNaN(strFloat) && str.length == (strFloat+'').length;
+};

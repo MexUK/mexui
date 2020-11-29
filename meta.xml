@@ -101,4 +101,10 @@
 	
 	<!-- resource manager app -->
 	<script language="javascript" type="client" src="ResourceManagerApp/ResourceManager.js" />
+	
+	
+	
+	
+	<!-- test controls app -->
+	<script language="javascript" type="client" src="TestControlsApp/TestControls.js" />
 </meta>
