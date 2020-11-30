@@ -5,6 +5,7 @@ mexui.util.createControlConstructor('Year', false, function(window, x, y, w, h, 
 	this.maxYearOffset			= 10;
 	this.minYearCallback		= ()=>{ return 1900; };
 	this.maxYearCallback		= ()=>{ return new Date().getFullYear() + this.maxYearOffset; }
+	this.twoDigitYearCapOffset	= 10;
 });
 mexui.util.extend(mexui.Control.Year, mexui.Control.TextInput);
 
@@ -16,10 +17,5 @@ mexui.Control.Year.prototype.validateInputCallback = function(e, character)
 
 mexui.Control.Year.prototype.validateValueCallback = function(e)
 {
-	var _int = parseInt(this.getText());
-	
-	if(_int < this.minYearCallback() || _int > this.maxYearCallback())
-		return false;
-	
-	return true;
+	return mexui.util.isYear(this.getText(), this.minYearCallback(), this.maxYearCallback(), this.twoDigitYearCapOffset);
 };

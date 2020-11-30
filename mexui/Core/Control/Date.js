@@ -13,6 +13,7 @@ mexui.util.createControlConstructor('Date', false, function(window, x, y, w, h, 
 	this.maxYearOffset			= 10;
 	this.minYearCallback		= ()=>{ return 1900; };
 	this.maxYearCallback		= ()=>{ return new Date().getFullYear() + this.maxYearOffset; }
+	this.twoDigitYearCapOffset	= 10;
 });
 mexui.util.extend(mexui.Control.Date, mexui.Control.TextInput);
 
@@ -144,29 +145,17 @@ mexui.Control.Date.prototype.validateValueCallback = function(e)
 		
 		if(i == 0)
 		{
-			if(mexui.util.isDayIdWithOptionalSuffix(partAsStr))
-				continue;
-			else
+			if(!mexui.util.isDayIdWithOptionalSuffix(partAsStr))
 				return false;
 		}
 		else if(i == 1)
 		{
-			if(mexui.util.isMonthIdOrName(partAsStr))
-				continue;
-			else
+			if(!mexui.util.isMonthIdOrName(partAsStr))
 				return false;
 		}
 		else if(i == 2)
 		{
-			if(!mexui.util.isPositiveInt(partAsStr))
-				return false;
-			
-			var part = parseInt(partAsStr);
-			
-			if(part < this.minYearCallback())
-				return false;
-		
-			if(part > this.maxYearCallback())
+			if(!mexui.util.isYear(partAsStr, this.minYearCallback(), this.maxYearCallback(), this.twoDigitYearCapOffset))
 				return false;
 		}
 	}

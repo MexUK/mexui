@@ -675,3 +675,30 @@ mexui.util.isWeekDayIdOrName = function(text)
 	
 	return mexui.util.isWeekDayName(text);
 };
+
+mexui.util.expand2DigitYear = function(year, twoDigitYearCapOffset)
+{
+	var currentFullYear = new Date().getFullYear();
+	var currentTwoDigitYearPlusCapOffset = parseInt((currentFullYear+'').substr(2, 2)) + twoDigitYearCapOffset;
+	if(year <= currentTwoDigitYearPlusCapOffset)
+		year += currentFullYear - (currentFullYear % 100);
+	else
+		year += (currentFullYear - (currentFullYear % 100)) - 100;
+	return year;
+};
+
+mexui.util.isYear = function(text, minYear, maxYear, twoDigitYearCapOffset)
+{
+	var _int = parseInt(text);
+	
+	if(isNaN(_int))
+		return false;
+	
+	if(_int >= 0 && _int <= 99)
+		_int = mexui.util.expand2DigitYear(_int, twoDigitYearCapOffset);
+	
+	if(_int < minYear || _int > maxYear)
+		return false;
+	
+	return true;
+};
