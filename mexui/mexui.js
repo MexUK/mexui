@@ -41,8 +41,10 @@ mexui.bindEvents = function()
 
 	addEventHandler('onMouseMove', function(event, mouse, isAbsolute, position)
 	{
-		var mouseSpeed = gta.getMouseSpeed();
-		mexui.triggerEvent('onMouseMove', new Vec2(mouseSpeed.x, -mouseSpeed.y), true);
+		if(isAbsolute)
+			return;
+		
+		mexui.triggerEvent('onMouseMove', new Vec2(position.x, position.y), true);
 	});
 
 	addEventHandler('onMouseWheel', function(event, mouse, offset, flipped)
