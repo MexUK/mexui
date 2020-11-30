@@ -64,6 +64,8 @@
 	<script language="javascript" type="client" src="mexui/Core/Control/Month.js" />
 	<script language="javascript" type="client" src="mexui/Core/Control/Number.js" />
 	<script language="javascript" type="client" src="mexui/Core/Control/Password.js" />
+	<script language="javascript" type="client" src="mexui/Core/Control/PositiveInteger.js" />
+	<script language="javascript" type="client" src="mexui/Core/Control/PositiveNumber.js" />
 	<script language="javascript" type="client" src="mexui/Core/Control/RangedInteger.js" />
 	<script language="javascript" type="client" src="mexui/Core/Control/RangedNumber.js" />
 	<script language="javascript" type="client" src="mexui/Core/Control/Second.js" />

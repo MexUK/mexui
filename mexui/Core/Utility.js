@@ -479,19 +479,24 @@ mexui.util.time = function()
 	return gta.tickCount;
 };
 
-mexui.util.isPositiveIntChar = function(character)
-{
-	return mexui.util.isDigit(character) || character == '-' || character == '+' || character == 'e' || character == 'E';
-};
-
 mexui.util.isIntChar = function(character)
 {
 	return mexui.util.isPositiveIntChar(character);
 };
 
+mexui.util.isPositiveIntChar = function(character)
+{
+	return mexui.util.isDigit(character) || character == '-' || character == '+' || character == 'e' || character == 'E';
+};
+
 mexui.util.isFloatChar = function(character)
 {
 	return mexui.util.isIntChar(character) || character == '.';
+};
+
+mexui.util.isPositiveFloatChar = function(character)
+{
+	return mexui.util.isPositiveIntChar(character) || character == '.';
 };
 
 mexui.util.isInt = function(str)
@@ -514,6 +519,16 @@ mexui.util.isFloat = function(str)
 	if(firstDot == 0)
 		addOffset--;
 	return !isNaN(strFloat) && str.length == ((strFloat+'').length + addOffset);
+};
+
+mexui.util.isPositiveFloat = function(str)
+{
+	var strFloat = parseFloat(str);
+	var firstDot = str.indexOf('.');
+	var addOffset = (str.substr(str.length - 2, 2) == '.0' && firstDot == (str.length - 2)) ? 2 : 0;
+	if(firstDot == 0)
+		addOffset--;
+	return !isNaN(strFloat) && strFloat >= 0.0 && str.length == ((strFloat+'').length + addOffset);
 };
 
 mexui.util.isMonthName = function(text)

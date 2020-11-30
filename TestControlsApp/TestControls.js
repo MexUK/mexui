@@ -33,6 +33,9 @@ testControls.init = function()
 	
 	testControls.weekDay	= testControls.window.weekDay(10, 650, 150, 25);
 	
+	testControls.positiveInteger	= testControls.window.positiveInteger(10, 690, 150, 25);
+	testControls.positiveNumber		= testControls.window.positiveNumber(10, 730, 150, 25);
+	
 	
 	
 	bindKey(SDLK_F5, KEYSTATE_DOWN, function(e)
@@ -41,4 +44,4 @@ testControls.init = function()
 		testControls.window.shown = show;
 		mexui.setInput(show);
 	});
-};	
+};
