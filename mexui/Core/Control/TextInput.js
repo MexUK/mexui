@@ -36,10 +36,13 @@ mexui.util.linkBaseControlStyles('TextInput', {
 // input
 mexui.Control.TextInput.prototype.onMouseDown = function(e)
 {
-	var hit = this.isCursorOverControl();
-	if(hit)
+	if(e.button == 0)
 	{
-		this.caretPosition = this.getCaretPositionByCursor();
+		var hit = this.isCursorOverControl();
+		if(hit)
+		{
+			this.caretPosition = this.getCaretPositionByCursor();
+		}
 	}
 	
 	mexui.Component.Control.prototype.onMouseDown.call(this, e);

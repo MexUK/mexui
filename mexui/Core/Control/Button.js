@@ -11,7 +11,16 @@ mexui.util.linkBaseControlStyles('Button', {});
 // input
 mexui.Control.Button.prototype.onMouseDown = function(e)
 {
-	if(this.isCursorOverControl())
+	if(e.button == 0 && this.isCursorOverControl())
+	{
+		e.used = true;
+		this.checkToCallCallback();
+	}
+};
+
+mexui.Control.Button.prototype.onKeyDown = function(e, key, mods)
+{
+	if(this.isFocused() && (key == SDLK_RETURN || key == SDLK_RETURN2 || key == SDLK_KP_ENTER || key == SDLK_SPACE))
 	{
 		e.used = true;
 		this.checkToCallCallback();

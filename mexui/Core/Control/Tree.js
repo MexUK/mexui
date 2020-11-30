@@ -28,10 +28,13 @@ mexui.util.linkBaseControlStyles('Tree', {
 // input
 mexui.Control.Tree.prototype.onMouseDown = function(e)
 {
-	var pos = this.getScreenPosition();
-	pos.y -= this.axis.y.getScrolledOffset();
-	
-	this.testRowClick(e, this.axis.y.entries, pos);
+	if(e.button == 0)
+	{
+		var pos = this.getScreenPosition();
+		pos.y -= this.axis.y.getScrolledOffset();
+		
+		this.testRowClick(e, this.axis.y.entries, pos);
+	}
 	
 	if(!e.used)
 		mexui.Entity.ControlWithEntries.prototype.onMouseDown.call(this, e);

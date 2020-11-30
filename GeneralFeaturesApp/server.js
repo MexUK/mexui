@@ -14,5 +14,5 @@ addNetworkHandler('spawnVehicleFromGui', function(client, vehicleModelId)
 	if(vehicleModelId > 236)
 		return;
 	
-	createVehicle(vehicleModelId, client.player.position.addPolar(1.5, client.player.heading));
+	gta.createVehicle(vehicleModelId, client.player.position.addPolar(1.5, client.player.heading));
 });

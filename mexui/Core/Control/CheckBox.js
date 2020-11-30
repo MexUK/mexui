@@ -19,11 +19,22 @@ mexui.util.linkBaseControlStyles('CheckBox', {
 // input
 mexui.Control.CheckBox.prototype.onMouseDown = function(e)
 {
-	if(this.isCursorOverControl())
+	if(e.button == 0 && this.isCursorOverControl())
 	{
 		e.used = true;
-		this.checked = !this.checked;
-		this.checkToCallCallback();
+		this.toggleChecked();
+	}
+};
+
+mexui.Control.CheckBox.prototype.onKeyDown = function(e, key, mods)
+{
+	if(this.isFocused())
+	{
+		if(key == SDLK_RETURN || key == SDLK_RETURN2 || key == SDLK_KP_ENTER || key == SDLK_SPACE)
+		{
+			e.used = true;
+			this.toggleChecked();
+		}
 	}
 };
 
@@ -48,4 +59,10 @@ mexui.Control.CheckBox.prototype.getSizeForInput = function()
 {
 	var textWidth = mexui.native.getTextWidth(this.text, this.getStyles('main'));
 	return new Vec2(this.size.x + this.textMarginLeft + textWidth, this.size.y);
+};
+
+mexui.Control.CheckBox.prototype.toggleChecked = function()
+{
+	this.checked = !this.checked;
+	this.checkToCallCallback();
 };

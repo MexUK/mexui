@@ -20,13 +20,21 @@ mexui.util.linkBaseControlStyles('RadioButton', {
 // input
 mexui.Control.RadioButton.prototype.onMouseDown = function(e)
 {
-	if(this.isCursorOverControl())
+	if(e.button == 0 && this.isCursorOverControl())
 	{
-		var checkedRadio = this.getCheckedRadio();
-		if(checkedRadio != this.checked)
-			checkedRadio.checked = false;
-		this.checked = !this.checked;
-		this.checkToCallCallback();
+		this.setChecked();
+	}
+};
+
+mexui.Control.RadioButton.prototype.onKeyDown = function(e, key, mods)
+{
+	if(this.isFocused())
+	{
+		if(key == SDLK_RETURN || key == SDLK_RETURN2 || key == SDLK_KP_ENTER || key == SDLK_SPACE)
+		{
+			e.used = true;
+			this.setChecked();
+		}
 	}
 };
 
@@ -88,4 +96,14 @@ mexui.Control.RadioButton.prototype.getCheckedRadio = function()
 mexui.Control.RadioButton.prototype.isFirstRadioInGroup = function()
 {
 	return this.getGroupRadios().length == 0;
+};
+
+mexui.Control.RadioButton.prototype.setChecked = function()
+{
+	var checkedRadio = this.getCheckedRadio();
+	if(checkedRadio != this.checked)
+		checkedRadio.checked = false;
+	
+	this.checked = !this.checked;
+	this.checkToCallCallback();
 };

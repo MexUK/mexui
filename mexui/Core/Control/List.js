@@ -23,7 +23,7 @@ mexui.util.linkBaseControlStyles('List', {
 // input
 mexui.Control.List.prototype.onMouseDown = function(e)
 {
-	if(this.isCursorOverControl())
+	if(e.button == 0 && this.isCursorOverControl())
 	{
 		this.activeRow = this.axis.y.getEntryByCursor();
 		this.checkToCallCallback();

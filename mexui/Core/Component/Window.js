@@ -45,7 +45,7 @@ mexui.Component.Window.defaultStyles = mexui.util.linkStyles(mexui.Entity.Stylea
 // input
 mexui.Component.Window.prototype.onMouseDown = function(e)
 {
-	if(this.titleBarShown && this.titleBarIconShown && this.isCursorOverCloseIcon())
+	if(e.button == 0 && this.titleBarShown && this.titleBarIconShown && this.isCursorOverCloseIcon())
 	{
 		this.shown = false;
 		mexui.setInput(false);
@@ -240,7 +240,14 @@ mexui.Component.Window.prototype.triggerEvent = function(eventName, e, data, cal
 		{
 			this.controls[i][eventName].call(control, e, data);
 			if(e.used)
+			{
+				if(e.button == 0 && eventName == 'onMouseDown')
+				{
+					mexui.focusedControl = this.controls[i];
+					e.clickedAControl = true;
+				}
 				break;
+			}
 			
 			if(mexui.Entity.Component.prototype[eventName])
 			{

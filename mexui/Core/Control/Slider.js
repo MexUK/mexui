@@ -36,7 +36,7 @@ mexui.util.linkBaseControlStyles('Slider', {
 // input
 mexui.Control.Slider.prototype.onMouseDown = function(e)
 {
-	if(this.isCursorOverInnerBar())
+	if(e.button == 0 && this.isCursorOverInnerBar())
 	{
 		this.sliding = true;
 		e.used = true;
@@ -45,7 +45,7 @@ mexui.Control.Slider.prototype.onMouseDown = function(e)
 
 mexui.Control.Slider.prototype.onMouseUp = function(e)
 {
-	if(this.sliding)
+	if(e.button == 0 && this.sliding)
 	{
 		this.sliding = false;
 		this.checkToCallCallback();

@@ -25,18 +25,18 @@ mexui.init = function()
 // events
 mexui.bindEvents = function()
 {
-	addEventHandler('onMouseDown', function(event)
+	addEventHandler('onMouseDown', function(event, mouse, button)
 	{
-		var e = mexui.triggerEvent('onMouseDown');
+		var e = mexui.triggerEvent('onMouseDown', {button: button});
 		if(!e.clickedAControl)
 		{
 			mexui.focusedControl = null;
 		}
 	});
 
-	addEventHandler('onMouseUp', function(event)
+	addEventHandler('onMouseUp', function(event, mouse, button)
 	{
-		mexui.triggerEvent('onMouseUp');
+		mexui.triggerEvent('onMouseUp', {button: button});
 	});
 
 	addEventHandler('onMouseMove', function(event, mouse, isAbsolute, position)
@@ -116,6 +116,10 @@ mexui.render = function()
 mexui.triggerEvent = function(eventName, data, callBaseMethodFirst)
 {
 	var e = new mexui.Component.Event();
+	
+	if(data.button !== undefined)
+		e.button = data.button;
+	
 	var windows = mexui.windows.slice(0, mexui.windows.length).reverse();
 	for(var i in windows)
 	{
