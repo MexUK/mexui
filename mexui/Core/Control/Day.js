@@ -7,15 +7,10 @@ mexui.util.extend(mexui.Control.Day, mexui.Control.TextInput);
 // model
 mexui.Control.Day.prototype.validateInputCallback = function(e, character)
 {
-	return mexui.util.isIntChar(character);
+	return mexui.util.isPositiveIntChar(character) || mexui.util.isLetter(character);
 };
 
 mexui.Control.Day.prototype.validateValueCallback = function(e)
 {
-	var _int = parseInt(this.getText());
-	
-	if(_int < 1 || _int > 31)
-		return false;
-	
-	return true;
+	return mexui.util.isDayIdWithOptionalSuffix(this.getText());
 };

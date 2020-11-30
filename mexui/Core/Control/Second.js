@@ -7,7 +7,7 @@ mexui.util.extend(mexui.Control.Second, mexui.Control.TextInput);
 // model
 mexui.Control.Second.prototype.validateInputCallback = function(e, character)
 {
-	return mexui.util.isIntChar(character);
+	return mexui.util.isPositiveIntChar(character);
 };
 
 mexui.Control.Second.prototype.validateValueCallback = function(e)

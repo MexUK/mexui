@@ -7,7 +7,7 @@ mexui.util.extend(mexui.Control.Week, mexui.Control.TextInput);
 // model
 mexui.Control.Week.prototype.validateInputCallback = function(e, character)
 {
-	return mexui.util.isIntChar(character);
+	return mexui.util.isPositiveIntChar(character);
 };
 
 mexui.Control.Week.prototype.validateValueCallback = function(e)

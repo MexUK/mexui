@@ -7,7 +7,7 @@ mexui.util.extend(mexui.Control.Minute, mexui.Control.TextInput);
 // model
 mexui.Control.Minute.prototype.validateInputCallback = function(e, character)
 {
-	return mexui.util.isIntChar(character);
+	return mexui.util.isPositiveIntChar(character);
 };
 
 mexui.Control.Minute.prototype.validateValueCallback = function(e)

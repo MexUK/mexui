@@ -10,7 +10,7 @@ setImmediate(function()
 
 testControls.init = function()
 {
-	testControls.window = mexui.window(400, 100, 800, 600);
+	testControls.window = mexui.window(400, 100, 800, 800);
 	testControls.window.shown = false;
 	
 	testControls.number		= testControls.window.number(10, 50, 150, 25);
@@ -30,6 +30,8 @@ testControls.init = function()
 	
 	testControls.date		= testControls.window.date(10, 490, 150, 25);
 	testControls.time		= testControls.window.time(10, 570, 150, 25);
+	
+	testControls.weekDay	= testControls.window.weekDay(10, 650, 150, 25);
 	
 	
 	

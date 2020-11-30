@@ -126,7 +126,7 @@ mexui.Control.Date.prototype.generateText = function()
 
 mexui.Control.Date.prototype.validateInputCallback = function(e, character)
 {
-	return mexui.util.isIntChar(character) || character == '/';
+	return mexui.util.isPositiveIntChar(character) || mexui.util.isLetter(character) || character == '/';
 };
 
 mexui.Control.Date.prototype.validateValueCallback = function(e)
@@ -140,20 +140,35 @@ mexui.Control.Date.prototype.validateValueCallback = function(e)
 	{
 		var partAsStr = parts[i];
 		if(partAsStr === '')
-			continue;
-		if(partAsStr.substr(0, 1) == '0')
-			partAsStr = partAsStr.substr(1);
-		
-		var part = parseInt(partAsStr);
-		
-		if(!mexui.util.isPositiveInt(partAsStr))
 			return false;
 		
-		if(part < (i == 2 ? this.minYearCallback() : 0))
-			return false;
-	
-		if(part > (i == 2 ? this.maxYearCallback() : (i == 1 ? 12 : 31)))
-			return false;
+		if(i == 0)
+		{
+			if(mexui.util.isDayIdWithOptionalSuffix(partAsStr))
+				continue;
+			else
+				return false;
+		}
+		else if(i == 1)
+		{
+			if(mexui.util.isMonthIdOrName(partAsStr))
+				continue;
+			else
+				return false;
+		}
+		else if(i == 2)
+		{
+			if(!mexui.util.isPositiveInt(partAsStr))
+				return false;
+			
+			var part = parseInt(partAsStr);
+			
+			if(part < this.minYearCallback())
+				return false;
+		
+			if(part > this.maxYearCallback())
+				return false;
+		}
 	}
 	
 	return true;

@@ -375,5 +375,6 @@ mexui.Component.Window.prototype.textInput		= function(x, y, w, h, text, styles,
 mexui.Component.Window.prototype.time			= function(x, y, w, h, text, styles, callback)	{	return this.addControl(new mexui.Control.Time(this, x, y, w, h, text, styles, callback));			};
 mexui.Component.Window.prototype.tree			= function(x, y, w, h, styles, callback)		{	return this.addControl(new mexui.Control.Tree(this, x, y, w, h, styles, callback));					};
 mexui.Component.Window.prototype.week			= function(x, y, w, h, text, styles, callback)	{	return this.addControl(new mexui.Control.Week(this, x, y, w, h, text, styles, callback));			};
+mexui.Component.Window.prototype.weekDay		= function(x, y, w, h, text, styles, callback)	{	return this.addControl(new mexui.Control.WeekDay(this, x, y, w, h, text, styles, callback));		};
 mexui.Component.Window.prototype.year			= function(x, y, w, h, text, styles, callback)	{	return this.addControl(new mexui.Control.Year(this, x, y, w, h, text, styles, callback));			};
 

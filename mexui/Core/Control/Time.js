@@ -109,7 +109,7 @@ mexui.Control.Time.prototype.generateText = function()
 
 mexui.Control.Time.prototype.validateInputCallback = function(e, character)
 {
-	return mexui.util.isIntChar(character) || character == ':';
+	return mexui.util.isPositiveIntChar(character) || character == ':';
 };
 
 mexui.Control.Time.prototype.validateValueCallback = function(e)
@@ -123,11 +123,12 @@ mexui.Control.Time.prototype.validateValueCallback = function(e)
 	{
 		var partAsStr = parts[i];
 		if(partAsStr === '')
-			continue;
-		if(partAsStr.substr(0, 1) == '0')
-			partAsStr = partAsStr.substr(1);
+			return false;
 		
 		var part = parseInt(partAsStr);
+		
+		if(partAsStr.length == 2 && partAsStr.substr(0, 1) == '0')
+			partAsStr = partAsStr.substr(1);
 		
 		if(!mexui.util.isPositiveInt(partAsStr))
 			return false;

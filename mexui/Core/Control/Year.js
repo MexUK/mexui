@@ -11,7 +11,7 @@ mexui.util.extend(mexui.Control.Year, mexui.Control.TextInput);
 // model
 mexui.Control.Year.prototype.validateInputCallback = function(e, character)
 {
-	return mexui.util.isIntChar(character);
+	return mexui.util.isPositiveIntChar(character);
 };
 
 mexui.Control.Year.prototype.validateValueCallback = function(e)
