@@ -287,7 +287,7 @@ mexui.isAnyWindowShown = function()
 mexui.setInput = function(showInput)
 {
 	gui.showCursor(showInput, !showInput);
-	if(localPlayer)
+	if(localPlayer && gta.game < GAME_GTA_IV)
 	{
 		if(showInput)
 			gta.setCameraLookAtEntity(new Vec3(gta.cameraMatrix.m41, gta.cameraMatrix.m42, gta.cameraMatrix.m43), localPlayer, false);
