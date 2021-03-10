@@ -43,7 +43,7 @@ mexui.bindEvents = function()
 	{
 		if(isAbsolute)
 			return;
-		
+
 		mexui.triggerEvent('onMouseMove', new Vec2(position.x, position.y), true);
 	});
 
@@ -55,7 +55,7 @@ mexui.bindEvents = function()
 	addEventHandler('onKeyDown', function(event, key, pkey, mods)
 	{
 		mexui.triggerEvent('onKeyDown', key, mods);
-		
+
 		if(key == SDLK_TAB)
 		{
 			mexui.cycleFocusedControl();
@@ -65,7 +65,7 @@ mexui.bindEvents = function()
 	addEventHandler('onCharacter', function(event, character)
 	{
 		mexui.triggerEvent('onCharacter', character);
-		
+
 		if(character == 't' || character == 'T')
 		{
 			var textInput = mexui.getFocusedTextInput();
@@ -76,7 +76,9 @@ mexui.bindEvents = function()
 		}
 	});
 
-	addEventHandler('onBeforeDrawHUD', function(event)
+	// (Vortrex) Changed onBeforeDrawHUD to onDrawnHUD because SA doesn't support the former
+	// This means all GUI is rendered BELOW the hud but I'd rather have that than no GUI at all lol
+	addEventHandler('onDrawnHUD', function(event)
 	{
 		mexui.render();
 	});
@@ -118,10 +120,10 @@ mexui.render = function()
 mexui.triggerEvent = function(eventName, data, callBaseMethodFirst)
 {
 	var e = new mexui.Component.Event();
-	
+
 	if(data.button !== undefined)
 		e.button = data.button;
-	
+
 	var windows = mexui.windows.slice(0, mexui.windows.length).reverse();
 	for(var i in windows)
 	{
@@ -135,7 +137,7 @@ mexui.triggerEvent = function(eventName, data, callBaseMethodFirst)
 					if(e.used)
 						break;
 				}
-				
+
 				windows[i][eventName].call(windows[i], e, data);
 				if(e.used)
 					break;
@@ -145,7 +147,7 @@ mexui.triggerEvent = function(eventName, data, callBaseMethodFirst)
 				windows[i][eventName].call(windows[i], e, data);
 				if(e.used)
 					break;
-				
+
 				if(mexui.Entity.Component.prototype[eventName])
 				{
 					mexui.Entity.Component.prototype[eventName].call(windows[i], e, data);
@@ -182,15 +184,15 @@ mexui.getShownWindows = function()
 mexui.getNextShownWindows = function(afterWindow)
 {
 	var shownWindows = mexui.getShownWindows();
-	
+
 	var windowIndex = shownWindows.indexOf(afterWindow);
-	
+
 	var windows2 = shownWindows.splice(0, windowIndex + 1);
 	var args = windows2;
 	args.unshift(0);
 	args.unshift(shownWindows.length);
 	shownWindows.splice.apply(shownWindows, args);
-	
+
 	return shownWindows;
 };
 
@@ -199,18 +201,18 @@ mexui.cycleFocusedControl = function()
 	// no windows are created
 	if(mexui.windows.length == 0)
 		return;
-	
+
 	// no control is focused
 	if(!mexui.focusedControl)
 	{
 		var topWindow = mexui.getTopWindow();
 		if(!topWindow)
 			return;
-		
+
 		mexui.focusedControl = topWindow.getFirstShownControl();
 		return;
 	}
-	
+
 	// a control is focused
 	var focusedControlWindow = mexui.focusedControl.window;
 	var nextControl = focusedControlWindow.getNextShownControl(mexui.focusedControl);
@@ -219,7 +221,7 @@ mexui.cycleFocusedControl = function()
 		mexui.focusedControl = nextControl;
 		return;
 	}
-	
+
 	// set focus to first control on next window that has a control shown
 	var shownWindows = mexui.getNextShownWindows(focusedControlWindow);
 	for(var i in shownWindows)
@@ -238,10 +240,10 @@ mexui.getFocusedTextInput = function()
 {
 	if(!mexui.focusedControl)
 		return null;
-	
+
 	if(!(mexui.focusedControl instanceof mexui.Control.TextInput))
 		return null;
-	
+
 	return mexui.focusedControl;
 };
 
@@ -250,7 +252,7 @@ mexui.toggleTextInputCaretShownForBlink = function()
 	var textInput = mexui.getFocusedTextInput();
 	if(!textInput)
 		return;
-	
+
 	textInput.caretShownForBlink = !textInput.caretShownForBlink;
 };
 
