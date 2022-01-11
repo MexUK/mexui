@@ -75,11 +75,14 @@ mexui.bindEvents = function()
 			}
 		}
 	});
-
-	addEventHandler('onBeforeDrawHUD', function(event)
+	
 	{
-		mexui.render();
-	});
+		var eventName = gta.game == GAME_GTA_SA ? 'onDrawnHUD' : 'onBeforeDrawHUD';
+		addEventHandler(eventName, function(event)
+		{
+			mexui.render();
+		});
+	}
 };
 
 mexui.unbindEvents = function()
