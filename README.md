@@ -1,3 +1,11 @@
+mexui - a UI API/GUI for GTA:Connected.
+
+Free to use.
+
+I recommend waiting for GTA:Connected to add support for partical/full HTML/CSS support for GUIs instead of using this resource.
+
+This resource is just for if you need GUIs right now.
+
 # Window
 `mexui.window(x, y, w, h, title, styles);`
 
