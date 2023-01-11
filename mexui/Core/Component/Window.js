@@ -3,6 +3,20 @@ mexui.Component.Window = function(x, y, w, h, title, styles)
 	mexui.Entity.Component.call(this, true);
 	mexui.Entity.StyleableEntity.call(this, this.linkComponentStyles('Window', styles));
 	
+	if(w <= 0)
+		w = 500;
+	if(h <= 0)
+		h = 250;
+	if(x == -1)
+		x = (gta.width / 2) - (w / 2);
+	if(y == -1)
+		y = (gta.height / 2) - (h / 2);
+	if(!title)
+		title = 'Window Title';
+
+	console.log(x);
+	console.log(y);
+
 	this.position				= new Vec2(x, y);
 	this.size					= new Vec2(w, h);
 	this.title					= title || '';
