@@ -270,9 +270,9 @@ mexui.clearHoveredComponent = function()
 };
 
 // api
-mexui.window = function(x, y, w, h, title, styles)
+mexui.window = function(x, y, w, h, title, styles, callbacks)
 {
-	var window = new mexui.Component.Window(x, y, w, h, title, styles);
+	var window = new mexui.Component.Window(x, y, w, h, title, styles, callbacks);
 	mexui.windows.push(window);
 	return window;
 };
