@@ -100,8 +100,12 @@ mexui.native.drawRectangleBorder = function(position, size, styles)
 {
 	var borderColour = styles.borderColour || styles.borderColor;
 	if(borderColour == null || borderColour == 'none')
+	{
+		//console.log('no border colour');
+		//for(let k in styles) console.log(k);
 		return;
-	
+	}
+
 	var rightXPosition			= position.x + size.x;
 	var bottomYPosition			= position.y + size.y;
 	
@@ -131,9 +135,62 @@ mexui.native.drawAALine = function(point1, point2, styles)
 {
 	var lineColour = styles.lineColour != null ? styles.lineColour : styles.lineColor;
 	if(lineColour == null || lineColour == 'none')
+	{
 		return;
+	}
 	
-	graphics.drawRectangle(null, point1, new Vec2((point2.x - point1.x) + styles.lineWeight, (point2.y - point1.y) + styles.lineWeight), lineColour, lineColour, lineColour, lineColour);
+	if(styles.lineStyle == 'dashed')
+	{
+		let drawStep = 8;
+		let gapStep = 5;
+		
+		let xDiff = Math.abs(point2.x - point1.x);
+		let yDiff = Math.abs(point2.y - point1.y);
+
+		let xAxis = yDiff == 0;
+		let yAxis = xDiff == 0;
+
+		let point3 = new Vec2(point1.x, point1.y);
+		let point4 = new Vec2(point3.x, point3.y);
+
+		let j = Math.ceil(Math.max(xDiff, yDiff) / (drawStep + gapStep));
+		for(let i=0; i<j; i++)
+		{
+			point4 = new Vec2(point3.x, point3.y);
+			if(xAxis)
+				point4.x += drawStep;
+			if(yAxis)
+				point4.y += drawStep;
+
+			graphics.drawRectangle(null, point3, new Vec2((point4.x - point3.x) + styles.lineWeight, (point4.y - point3.y) + styles.lineWeight), lineColour, lineColour, lineColour, lineColour);
+
+			if(xAxis)
+				point3.x += drawStep + gapStep;
+			if(yAxis)
+				point3.y += drawStep + gapStep;
+		}
+
+		/*
+		for(;;)
+		{
+			if(point3.x > (point2.x+10) || point3.y > (point2.y+10))
+				break;
+			
+			let point4 = new Vec2(point3.x + xStep1, point3.y + yStep1);
+	
+			graphics.drawRectangle(null, point3, new Vec2((point4.x - point3.x) + styles.lineWeight, (point4.y - point3.y) + styles.lineWeight), lineColour, lineColour, lineColour, lineColour);
+			
+			if(xAxis)
+				point3.x += xStep2;
+			if(yAxis)
+				point3.y += yStep2;
+		}
+		*/
+	}
+	else
+	{
+		graphics.drawRectangle(null, point1, new Vec2((point2.x - point1.x) + styles.lineWeight, (point2.y - point1.y) + styles.lineWeight), lineColour, lineColour, lineColour, lineColour);
+	}
 };
 
 mexui.native.drawText = function(position, size, text, styles)
