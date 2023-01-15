@@ -8,11 +8,10 @@ mexui.util.createControlConstructor('Menu', true, function(window, x, y, w, h, i
 	this.activeItem			= null;
 	this.itemLength			= 25;
 
-	let menu = this;
 	items.forEach(item =>
 	{
 		let text = item;
-		menu.item(text);
+		this.item(text);
 		/*
 		if(Array.isArray(item))
 		{
@@ -99,6 +98,9 @@ mexui.Control.Menu.prototype.renderItems = function(pos)
 
 	for(var i in axis.entries)
 	{
+		if((i * this.rowHeight) >= this.size.y)
+			break;
+
 		var row = axis.entries[i];
 		var rowText = row.text;
 		
@@ -115,6 +117,9 @@ mexui.Control.Menu.prototype.renderItems = function(pos)
 
 	for(var i in axis.entries)
 	{
+		if((i * this.rowHeight) >= this.size.y)
+			break;
+
 		var row = axis.entries[i];
 		
 		if(this.axisIndex == 0)
