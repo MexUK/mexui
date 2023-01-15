@@ -45,6 +45,15 @@ mexui.Control.List.prototype.render = function()
 		mexui.native.drawText(pos, new Vec2(this.size.x, this.rowHeight), rowText, this.getStyles('row'));
 		
 		pos.y += this.rowHeight;
+	}
+
+	pos = new Vec2(pos2.x, pos2.y);
+
+	for(var i in this.axis.y.entries)
+	{
+		var row = this.axis.y.entries[i];
+		
+		pos.y += this.rowHeight;
 		mexui.native.drawAALine(pos, new Vec2(pos.x + this.size.x, pos.y), this.getStyles('rowLine'));
 	}
 	
@@ -58,5 +67,10 @@ mexui.Control.List.prototype.row = function(text)
 	var entry = new mexui.Entry.ListRow(this, text);
 	this.axis.y.addEntry(entry);
 	return entry;
+};
+
+mexui.Control.List.prototype.getSizeForInput = function()
+{
+	return new Vec2(this.size.x, Math.min(this.axis.y.entries.length * this.rowHeight, this.size.y));
 };
 

@@ -80,12 +80,14 @@ mexui.Component.Control.prototype.renderAfter = function()
 mexui.Component.Control.prototype.checkToCallCallback = function()
 {
 	if(this.callback)
-		this.callback.call(this);
+		this.callback.call(this, this);
 };
 
 mexui.Component.Control.prototype.getScreenPosition = function()
 {
 	var pos = mexui.util.addVec2(this.window.position, this.position);
+	if(!this.window.titleBarHeightIncluded)
+		pos = mexui.util.addVec2(pos, new Vec2(0, this.window.titleBarHeight));
 	if(this.boundTo)
 		pos = mexui.util.addVec2(pos, new Vec2(-this.boundTo.axis.x.getScrolledOffsetFixedStart(), -this.boundTo.axis.y.getScrolledOffsetFixedStart()));
 	return pos;

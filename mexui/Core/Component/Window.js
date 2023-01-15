@@ -26,6 +26,7 @@ mexui.Component.Window = function(x, y, w, h, title, styles)
 	this.titleBarHeight			= 30;
 	this.titleBarIconShown		= true;
 	this.titleBarIconSize		= new Vec2(30, 30);
+	this.titleBarHeightIncluded	= false;
 };
 mexui.util.extend(mexui.Component.Window, mexui.Entity.Component);
 
@@ -377,6 +378,7 @@ mexui.Component.Window.prototype.letterDigit	= function(x, y, w, h, text, styles
 mexui.Component.Window.prototype.lettersDigits	= function(x, y, w, h, text, styles, callback)	{	return this.addControl(new mexui.Control.LettersDigits(this, x, y, w, h, text, styles, callback));	};
 mexui.Component.Window.prototype.line			= function(x, y, w, h, styles, callback)		{	return this.addControl(new mexui.Control.Line(this, x, y, w, h, styles, callback));					};
 mexui.Component.Window.prototype.list			= function(x, y, w, h, styles, callback)		{	return this.addControl(new mexui.Control.List(this, x, y, w, h, styles, callback));					};
+mexui.Component.Window.prototype.menu			= function(x, y, w, h, items, styles, callback)	{	return this.addControl(new mexui.Control.Menu(this, x, y, w, h, items, styles, callback));			};
 mexui.Component.Window.prototype.minute			= function(x, y, w, h, text, styles, callback)	{	return this.addControl(new mexui.Control.Minute(this, x, y, w, h, text, styles, callback));			};
 mexui.Component.Window.prototype.month			= function(x, y, w, h, text, styles, callback)	{	return this.addControl(new mexui.Control.Month(this, x, y, w, h, text, styles, callback));			};
 mexui.Component.Window.prototype.number			= function(x, y, w, h, text, styles, callback)	{	return this.addControl(new mexui.Control.Number(this, x, y, w, h, text, styles, callback));			};

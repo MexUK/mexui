@@ -7,7 +7,8 @@ mexui.Component.Entry = function(control, axisIndex, text, styles)
 	this.axisIndex			= axisIndex;
 	this.text				= text;
 };
-mexui.util.extend(mexui.Component.Entry, mexui.Entity.Component);
+//mexui.util.extend(mexui.Component.Entry, mexui.Entity.Component);
+mexui.util.extend(mexui.Component.Entry, mexui.Component.Control);
 
 // default styles
 mexui.Component.Entry.defaultStyles = mexui.util.linkStyles(mexui.Entity.StyleableEntity.defaultStyles, {});
