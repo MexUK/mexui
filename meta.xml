@@ -76,38 +76,4 @@
 	<script language="javascript" type="client" src="mexui/Core/Control/Year.js" />
 	
 	<script language="javascript" type="client" src="mexui/Core/Init.js" />
-	
-	
-	
-	
-	<!-- general features app -->
-	<file type="client" src="GeneralFeaturesApp/Map/vc.png" />
-	<script language="javascript" type="client" src="GeneralFeaturesApp/Map/Map.js" />
-	
-	<script language="javascript" type="server" src="GeneralFeaturesApp/server.js" />
-	<script language="javascript" type="client" src="GeneralFeaturesApp/client.js" />
-	
-	
-	
-	
-	<!-- data viewer app -->
-	<script language="javascript" type="client" src="DataViewerApp/DataViewer.js" />
-	
-	
-	
-	
-	<!-- run code app -->
-	<script language="javascript" type="client" src="RunCodeApp/RunCode.js" />
-	
-	
-	
-	
-	<!-- resource manager app -->
-	<script language="javascript" type="client" src="ResourceManagerApp/ResourceManager.js" />
-	
-	
-	
-	
-	<!-- test controls app -->
-	<script language="javascript" type="client" src="TestControlsApp/TestControls.js" />
 </meta>
