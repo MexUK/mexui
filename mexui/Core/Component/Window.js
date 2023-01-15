@@ -1,4 +1,4 @@
-mexui.Component.Window = function(x, y, w, h, title, styles)
+mexui.Component.Window = function(x, y, w, h, title, styles, callbacks)
 {
 	mexui.Entity.Component.call(this, true);
 	mexui.Entity.StyleableEntity.call(this, this.linkComponentStyles('Window', styles));
@@ -14,12 +14,10 @@ mexui.Component.Window = function(x, y, w, h, title, styles)
 	if(!title)
 		title = 'Window Title';
 
-	console.log(x);
-	console.log(y);
-
 	this.position				= new Vec2(x, y);
 	this.size					= new Vec2(w, h);
 	this.title					= title || '';
+	this.callbacks				= callbacks || {};
 	
 	this.controls				= [];
 	this.titleBarShown			= true;
@@ -27,6 +25,7 @@ mexui.Component.Window = function(x, y, w, h, title, styles)
 	this.titleBarIconShown		= true;
 	this.titleBarIconSize		= new Vec2(30, 30);
 	this.titleBarHeightIncluded	= false;
+	this.preventMove	= false;
 };
 mexui.util.extend(mexui.Component.Window, mexui.Entity.Component);
 
@@ -67,22 +66,36 @@ mexui.Component.Window.prototype.onMouseDown = function(e)
 		e.used = true;
 		return;
 	}
-	
+
+	this.triggerEvent('onMouseDown', e);
+
 	if(this.isCursorOverWindow())
 	{
 		this.setTop();
+		
+		if(this.callbacks && this.callbacks.onMouseDown)
+			this.callbacks.onMouseDown.forEach(cb => cb(e));	
 	}
-	
-	this.triggerEvent('onMouseDown', e);
 };
 
 mexui.Component.Window.prototype.onMouseUp = function(e)
 {
+	if(this.callbacks && this.callbacks.onMouseUp)
+		this.callbacks.onMouseUp.forEach(cb => cb(e));
+	
 	this.triggerEvent('onMouseUp', e);
 };
 
 mexui.Component.Window.prototype.onMouseMove = function(e, offset)
 {
+	if(this.callbacks && this.callbacks.onMouseMove)
+		this.callbacks.onMouseMove.forEach(cb => cb(e));
+	
+	if(this.preventMove)
+	{
+		return;
+	}
+
 	//var wasHovered = this.isHovered();
 	//e.wasHovered = wasHovered;
 	
@@ -132,6 +145,9 @@ mexui.Component.Window.prototype.onMouseWheel = function(e, data)
 mexui.Component.Window.prototype.onKeyDown = function(e, key, mods)
 {
 	this.triggerEvent('onKeyDown', e, key, mods);
+
+	if(this.callbacks && this.callbacks.onKeyDown)
+		this.callbacks.onKeyDown.forEach(cb => cb(e, key, mods));
 };
 
 mexui.Component.Window.prototype.onCharacter = function(e, character)
@@ -162,6 +178,10 @@ mexui.Component.Window.prototype.render = function()
 	
 	// window border
 	mexui.native.drawRectangleBorder(this.position, this.size, this.getStyles('main'));
+
+	// callbacks
+	if(this.callbacks && this.callbacks.onRender)
+		this.callbacks.onRender.forEach(cb => cb());
 	
 	// window controls
 	var show, control;
@@ -280,6 +300,16 @@ mexui.Component.Window.prototype.addControl = function(control)
 	return control;
 };
 
+mexui.Component.Window.prototype.removeControl = function(control)
+{
+	let index = this.controls.indexOf(control);
+	if(index == -1)
+		return false;
+	
+	this.controls.splice(index, 1);
+	return true;
+};
+
 mexui.Component.Window.prototype.setShown = function(shown)
 {
 	//var anyWindowShownBefore = mexui.isAnyWindowShown();
@@ -377,7 +407,7 @@ mexui.Component.Window.prototype.letters		= function(x, y, w, h, text, styles, c
 mexui.Component.Window.prototype.letterDigit	= function(x, y, w, h, text, styles, callback)	{	return this.addControl(new mexui.Control.LetterDigit(this, x, y, w, h, text, styles, callback));	};
 mexui.Component.Window.prototype.lettersDigits	= function(x, y, w, h, text, styles, callback)	{	return this.addControl(new mexui.Control.LettersDigits(this, x, y, w, h, text, styles, callback));	};
 mexui.Component.Window.prototype.line			= function(x, y, w, h, styles, callback)		{	return this.addControl(new mexui.Control.Line(this, x, y, w, h, styles, callback));					};
-mexui.Component.Window.prototype.list			= function(x, y, w, h, styles, callback)		{	return this.addControl(new mexui.Control.List(this, x, y, w, h, styles, callback));					};
+mexui.Component.Window.prototype.list			= function(x, y, w, h, items, styles, callback)	{	return this.addControl(new mexui.Control.List(this, x, y, w, h, items, styles, callback));					};
 mexui.Component.Window.prototype.menu			= function(x, y, w, h, items, styles, callback)	{	return this.addControl(new mexui.Control.Menu(this, x, y, w, h, items, styles, callback));			};
 mexui.Component.Window.prototype.minute			= function(x, y, w, h, text, styles, callback)	{	return this.addControl(new mexui.Control.Minute(this, x, y, w, h, text, styles, callback));			};
 mexui.Component.Window.prototype.month			= function(x, y, w, h, text, styles, callback)	{	return this.addControl(new mexui.Control.Month(this, x, y, w, h, text, styles, callback));			};
