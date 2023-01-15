@@ -93,6 +93,18 @@ mexui.native.drawRectangleBackground = function(position, size, styles)
 	if(backgroundColour == null || backgroundColour == 'none')
 		return;
 	
+	if(size.x < 0)
+	{
+		size.x = -size.x;
+		position.x -= size.x;
+	}
+
+	if(size.y < 0)
+	{
+		size.y = -size.y;
+		position.y -= size.y;
+	}
+	
 	graphics.drawRectangle(null, position, size, backgroundColour, backgroundColour, backgroundColour, backgroundColour);
 };
 
@@ -104,6 +116,18 @@ mexui.native.drawRectangleBorder = function(position, size, styles)
 		//console.log('no border colour');
 		//for(let k in styles) console.log(k);
 		return;
+	}
+
+	if(size.x < 0)
+	{
+		size.x = -size.x;
+		position.x -= size.x;
+	}
+
+	if(size.y < 0)
+	{
+		size.y = -size.y;
+		position.y -= size.y;
 	}
 
 	var rightXPosition			= position.x + size.x;

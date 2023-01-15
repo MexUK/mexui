@@ -16,7 +16,29 @@ mexui.util.isPointInRectangle = function(point, position, size)
 	if(!point)
 		return false; // temp bug fix
 	
+	if(size.x < 0)
+	{
+		size.x = -size.x;
+		position.x -= size.x;
+	}
+
+	if(size.y < 0)
+	{
+		size.y = -size.y;
+		position.y -= size.y;
+	}
+
 	return point.x >= position.x && point.y >= position.y && point.x <= (position.x + size.x) && point.y <= (position.y + size.y);
+};
+
+mexui.util.doRectanglesOverlap = function(point1, size1, point2, size2)
+{
+	let aLeftOfB = (point1.x + size1.x) < point2.x;
+    let aRightOfB = point1.x > (point2.x + size2.x);
+    let aAboveB = point1.y > (point2.y + size2.y);
+    let aBelowB = (point1.y + size1.y) < point2.y;
+
+    return !( aLeftOfB || aRightOfB || aAboveB || aBelowB );
 };
 
 mexui.util.isCursorInRectangle = function(position, size)
