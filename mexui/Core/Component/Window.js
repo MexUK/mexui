@@ -19,13 +19,13 @@ mexui.Component.Window = function(x, y, w, h, title, styles, callbacks)
 	this.title					= title || '';
 	this.callbacks				= callbacks || {};
 	
-	this.controls				= [];
-	this.titleBarShown			= true;
-	this.titleBarHeight			= 30;
-	this.titleBarIconShown		= true;
-	this.titleBarIconSize		= new Vec2(30, 30);
-	this.titleBarHeightIncluded	= false;
-	this.preventMove	= false;
+	this.controls					= [];
+	this.titleBarShown				= true;
+	this.titleBarHeight				= 30;
+	this.titleBarIconShown			= true;
+	this.titleBarIconSize			= new Vec2(30, 30);
+	this.drawControlsOverTitleBar	= false;
+	this.preventMove				= false;
 };
 mexui.util.extend(mexui.Component.Window, mexui.Entity.Component);
 

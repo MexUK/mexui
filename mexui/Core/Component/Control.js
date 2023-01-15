@@ -86,7 +86,7 @@ mexui.Component.Control.prototype.checkToCallCallback = function()
 mexui.Component.Control.prototype.getScreenPosition = function()
 {
 	var pos = mexui.util.addVec2(this.window.position, this.position);
-	if(!this.window.titleBarHeightIncluded)
+	if(!this.window.drawControlsOverTitleBar)
 		pos = mexui.util.addVec2(pos, new Vec2(0, this.window.titleBarHeight));
 	if(this.boundTo)
 		pos = mexui.util.addVec2(pos, new Vec2(-this.boundTo.axis.x.getScrolledOffsetFixedStart(), -this.boundTo.axis.y.getScrolledOffsetFixedStart()));
