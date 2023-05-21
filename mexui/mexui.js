@@ -277,6 +277,18 @@ mexui.window = function(x, y, w, h, title, styles, callbacks)
 	return window;
 };
 
+mexui.removeWindow = function(window)
+{
+    for(let i in mexui.windows)
+    {
+        if(window == mexui.windows[i])
+        {
+            mexui.windows.splice(i, 1);
+            break;
+        }
+    }
+};
+
 mexui.isAnyWindowShown = function()
 {
 	for(var i in mexui.windows)
