@@ -35,7 +35,7 @@ This resource is just for if you need GUIs right now.
 * `window.number(x, y, w, h, text, styles, callback)`
 * `window.password(x, y, w, h, text, styles, callback)`
 * `window.progressBar(x, y, w, h, text, styles)`
-* `window.radioButton(x, y, w, h, text, groupId, styles, callback)`
+* `window.radioButton(x, y, w, h, groupId, text, styles, callback)`
 * `window.rangedInteger(x, y, w, h, text, min, max, styles, callback)`
 * `window.rangedNumber(x, y, w, h, text, min, max, styles, callback)`
 * `window.rectangle(x, y, w, h, styles, callback)`
