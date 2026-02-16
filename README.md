@@ -22,7 +22,7 @@ This resource is just for if you need GUIs right now.
 * `window.dropDown(x, y, w, h, text, styles, callback)`
 * `window.grid(x, y, w, h, styles)`
 * `window.hour(x, y, w, h, text, styles, callback)`
-* `window.image(x, y, w, h, filePath, styles)`
+* `window.image(x, y, w, h, filePathOrImage, styles)`
 * `window.integer(x, y, w, h, text, styles, callback)`
 * `window.letter(x, y, w, h, text, styles, callback)`
 * `window.letters(x, y, w, h, text, styles, callback)`
