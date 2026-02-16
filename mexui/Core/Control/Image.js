@@ -1,8 +1,17 @@
 mexui.util.createControlConstructor('Image', false, function(window, x, y, w, h, filePath, styles, callback)
 {
 	mexui.Component.Control.call(this, window, x, y, w, h, this.linkControlStyles('Image', styles), callback);
-	
-	this.image				= mexui.native.loadImage(filePath);
+
+	this.image = null;
+	if(typeof filePath == "string")
+	{
+		this.image = mexui.native.loadImage(filePath);
+	} 
+	else
+	{
+		// filePath is an image object already, use it instead of loading
+		this.image = filePath;
+	}
 });
 
 // default styles
